@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.demo.jpa.model.entity.Customer;
-import com.demo.jpa.model.repository.CustomerRepository;
+import com.demo.jpa.service.JpaService;
 
 @RestController
 public class JpaController {
@@ -35,17 +35,15 @@ public class JpaController {
 	}
 	
 	
+	
 	@Autowired
-	CustomerRepository customerRepository;
+	JpaService jpaService;
 	
 	@PostMapping("/customer")
 	public @ResponseBody List<Customer> createCustomer(@RequestBody Map<String,String> param){
-		String name = param.get("name");
-		String phone = param.get("phone");
-		Customer customer = Customer.builder().name(name).phone(phone).build();
-		customerRepository.save(customer);
 		
-		return customerRepository.findAll();
+		
+		return jpaService.saveCust(param);
 	}
 	
 	
